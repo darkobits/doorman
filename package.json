@@ -1,0 +1,76 @@
+{
+  "name": "@darkobits/doorman",
+  "version": "0.1.2",
+  "author": "darkobits",
+  "description": "An attempt to make access control systems Suck Less.",
+  "license": "WTFPL",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "6.x",
+    "npm": "4.x"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "xo",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
+    "prebuild": "rimraf dist",
+    "build": "babel src --out-dir dist",
+    "build:watch": "npm run build -- --watch",
+    "precommit": "run-p lint",
+    "prepublish": "run-p lint test build",
+    "start": "npm run build && heroku local"
+  },
+  "pre-commit": [
+    "lint",
+    "clean",
+    "build:pre-commit"
+  ],
+  "dependencies": {
+    "babel-polyfill": "6.x",
+    "body-parser": "1.17.x",
+    "express": "4.15.x",
+    "npmlog": "4.x",
+    "ramda": "0.24.x",
+    "twilio": "2.11.x"
+  },
+  "devDependencies": {
+    "babel-cli": "6.x",
+    "babel-preset-env": "1.x",
+    "husky": "0.14.x",
+    "jest": "20.x",
+    "npm-run-all": "4.x",
+    "rimraf": "2.6.x",
+    "supertest": "3.x",
+    "xo": "0.18.x"
+  },
+  "xo": {
+    "env": [
+      "node",
+      "jest"
+    ],
+    "space": true,
+    "rules": {
+      "capitalized-comments": "warn",
+      "import/no-extraneous-dependencies": "off",
+      "import/no-unassigned-import": "off",
+      "import/no-unresolved": "off",
+      "import/prefer-default-export": "off",
+      "max-nested-callbacks": "off",
+      "max-params": "off",
+      "new-cap": "off",
+      "no-multiple-empty-lines": "off",
+      "no-prototype-builtins": "off",
+      "prefer-arrow-callback": "off",
+      "space-before-function-paren": [
+        "error",
+        {
+          "named": "always"
+        }
+      ],
+      "unicorn/filename-case": "off"
+    }
+  }
+}

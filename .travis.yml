@@ -1,0 +1,19 @@
+language: node_js
+node_js: 6
+
+install:
+  - yarn
+
+script:
+  - yarn lint
+  - yarn build
+  - yarn test -- --coverage
+
+after_success:
+  - yarn add codacy-coverage
+  - $(yarn bin)/codacy-coverage -v < ./coverage/lcov.info
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
