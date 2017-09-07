@@ -1,6 +1,6 @@
 import R from 'ramda';
 import req from 'supertest';
-import GateBot from '../src';
+import Doorman from '../src';
 
 import {
   TWILIO_ENDPOINT
@@ -17,7 +17,7 @@ const TWILIO_PHONE_NUMBER = '415-555-3333';
 
 
 /**
- * Creates a gate bot instance.
+ * Creates a Doorman instance.
  *
  * @param  {object} data - Mock data to use.
  * @return {object}
@@ -26,7 +26,7 @@ function createApp (data) {
   const TWILIO_ACCOUNT_SID = '1';
   const TWILIO_APPLICATION_SID = '2';
 
-  const app = GateBot({
+  const app = Doorman({
     logLevel: 'error',
     primaryPhoneNumber: PRIMARY_PHONE_NUMBER,
     twilioPhoneNumber: TWILIO_PHONE_NUMBER,
@@ -43,7 +43,7 @@ function createApp (data) {
 
 
   /**
-   * Simulates a request to gate bot coming from Twilio.
+   * Simulates a request to Doorman coming from Twilio.
    *
    * @param  {object} params
    * @return {promise}
