@@ -21,13 +21,10 @@
     "build:watch": "npm run build -- --watch",
     "precommit": "run-p lint",
     "prepublish": "run-p lint test build",
+    "prebump": "npm run prepublish",
+    "bump": "standard-version",
     "start": "npm run build && heroku local"
   },
-  "pre-commit": [
-    "lint",
-    "clean",
-    "build:pre-commit"
-  ],
   "dependencies": {
     "babel-polyfill": "6.x",
     "body-parser": "1.17.x",
@@ -40,9 +37,10 @@
     "babel-cli": "6.x",
     "babel-preset-env": "1.x",
     "husky": "0.14.x",
-    "jest": "20.x",
+    "jest": "21.x",
     "npm-run-all": "4.x",
     "rimraf": "2.6.x",
+    "standard-version": "4.x",
     "supertest": "3.x",
     "xo": "0.18.x"
   },
