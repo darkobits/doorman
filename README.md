@@ -1,4 +1,4 @@
-[![][travis-img]][travis-url] [![][david-img]][david-url] [![][codacy-img]][codacy-url] [![][xo-img]][xo-url] [![][npm-img]][npm-url]
+[![][travis-img]][travis-url] [![][david-img]][david-url] [![][codacy-img]][codacy-url] [![][cc-img]][cc-url] [![][xo-img]][xo-url] [![][npm-img]][npm-url]
 
 # Doorman
 
@@ -333,6 +333,9 @@ Next, let's prompt the guest for a simple passcode (`123`) and forward the call 
 
 [codacy-img]: https://img.shields.io/codacy/coverage/1fbd5676e2df4ec78555c507a4d3d5a3.svg?style=flat-square
 [codacy-url]: https://www.codacy.com/app/darkobits/doorman
+
+[cc-img]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square
+[cc-url]: https://github.com/conventional-changelog/standard-version
 
 [xo-img]: https://img.shields.io/badge/code_style-XO-f74c4c.svg?style=flat-square
 [xo-url]: https://github.com/sindresorhus/xo
