@@ -1,6 +1,6 @@
 {
   "name": "@darkobits/doorman",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "darkobits",
   "description": "An attempt to make access control systems Suck Less.",
   "license": "WTFPL",
