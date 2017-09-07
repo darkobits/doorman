@@ -1,6 +1,6 @@
-[![][travis-img]][travis-url] [![][david-img]][david-url] [![][codacy-img]][codacy-url] [![][cc-img]][cc-url] [![][xo-img]][xo-url] [![][npm-img]][npm-url]
+![doorman](https://user-images.githubusercontent.com/441546/36626936-525ce744-18f0-11e8-9652-b9e2ea2cf319.png)
 
-# Doorman
+[![][npm-img]][npm-url] [![][travis-img]][travis-url] [![][codacy-img]][codacy-url] [![][cc-img]][cc-url] [![][xo-img]][xo-url]
 
 Modern apartment communities equipped with access control systems typically work like this:
 
@@ -124,7 +124,7 @@ doorman({
 
 Doorman is programmed using JSON. Each key in Doorman's data-store represents an inbound caller ID, and each value represents how Doorman should handle calls from that number. Doorman supports numerous directives which can be composed to construct a call flow.
 
-The basic structure call flow is:
+The basic structure of a call flow is:
 
 ```js
 [
@@ -168,7 +168,7 @@ Sends a text message.
 ```json
 [
   ["sendSms", {
-    "to": "+14155551212"
+    "to": "+14155551212",
     "value": "Hello, world!"
   }]
 ]
@@ -214,7 +214,7 @@ Sends a sequence of DTMF tones for the provided digit or digits.
 
 #### `gatherDigits`
 
-Pauses the call and waits for the callee to enter a sequence of digits. The call will then proceed down the branch matching the sequence entered. A `default` branch must be provided to handle cases where the callee does not enter a matching sequence.
+Pauses the call and waits for the caller to enter a sequence of digits. The call will then proceed down the branch matching the sequence entered. A `default` branch must be provided to handle cases where the caller does not enter a matching sequence.
 
 |Option|Type|Description|
 |---|---|---|
@@ -260,6 +260,8 @@ Instructs Twilio to play the audio file at the provided URL. To ensure Doorman s
 
 Ends the call.
 
+> **Note:** This directive is typically not needed, as Doorman will end the call if it reaches the end of the call flow.
+
 **Example:**
 
 ```json
@@ -268,7 +270,7 @@ Ends the call.
 ]
 ```
 
-### Examples
+## Examples
 
 In the following examples, let's assume we are working with an access control system that has the phone number `+14155551111`, a resident who has a cell number `+14155552222`, and that residents must enter the digit `9` to grant access to guests. Note that if using a data store such as Redis, we would store the access control system's caller ID as a key and the call flow as a value. These examples use a plain object for clarity.
 
@@ -328,16 +330,13 @@ Next, let's prompt the guest for a simple passcode (`123`) and forward the call 
 [travis-img]: https://img.shields.io/travis/darkobits/doorman.svg?style=flat-square
 [travis-url]: https://travis-ci.org/darkobits/doorman
 
-[david-img]: https://img.shields.io/david/darkobits/doorman.svg?style=flat-square
-[david-url]: https://david-dm.org/darkobits/doorman
-
 [codacy-img]: https://img.shields.io/codacy/coverage/1fbd5676e2df4ec78555c507a4d3d5a3.svg?style=flat-square
 [codacy-url]: https://www.codacy.com/app/darkobits/doorman
 
 [cc-img]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square
 [cc-url]: https://github.com/conventional-changelog/standard-version
 
-[xo-img]: https://img.shields.io/badge/code_style-XO-f74c4c.svg?style=flat-square
+[xo-img]: https://img.shields.io/badge/code_style-XO-e271a5.svg?style=flat-square
 [xo-url]: https://github.com/sindresorhus/xo
 
 [npm-img]: https://img.shields.io/npm/v/@darkobits/doorman.svg?style=flat-square
