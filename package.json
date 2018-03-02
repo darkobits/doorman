@@ -24,9 +24,10 @@
     "build": "babel src --out-dir=dist --source-maps --no-comments",
     "build:watch": "npm run build -- --watch",
     "precommit": "run-p lint",
-    "prepublish": "run-p lint test build",
+    "prepublishOnly": "run-p lint test build",
     "prebump": "npm run prepublish",
-    "bump": "standard-version"
+    "bump": "standard-version",
+    "bump:beta": "npm run bump -- --prerelease=beta"
   },
   "dependencies": {
     "@darkobits/log": "^1.0.0",
