@@ -74,15 +74,15 @@ export default function Doorman (userConfig) {
    */
   function validateTwilioRequest (req, res, next) {
     if (process.env.NODE_ENV === 'development') {
-      log.verbose('validate twilio request', 'Not in production environment, assuming request is valid.');
+      log.verbose('validateTwilioRequest', 'Not in production environment, assuming request is valid.');
       next();
       return;
     }
 
     const inboundCallerId = parseCallerId(req.query.From);
-    const isSecure = !config.allowInsecure || req.get('X-Forwarded-Proto') === 'https';
+    const isSecure = config.allowInsecure || req.get('X-Forwarded-Proto') === 'https';
 
-    log.verbose('validate twilio request', `Incoming call from "${inboundCallerId}".`);
+    log.verbose('validateTwilioRequest', `Incoming call from "${inboundCallerId}".`);
 
     const isValid = where({
       ApplicationSid: equals(config.twilioApplicationSid),
@@ -90,10 +90,10 @@ export default function Doorman (userConfig) {
     }, merge(req.query, req.body));
 
     if (isSecure && isValid) {
-      log.verbose('validate twilio request', 'Twilio request is valid.');
+      log.verbose('validateTwilioRequest', 'Twilio request is valid.');
       next();
     } else {
-      log.warn('validate twilio request', 'Twilio request is invalid.');
+      log.warn('validateTwilioRequest', 'Twilio request is invalid.');
       res.sendStatus(400);
     }
   }
