@@ -34,7 +34,8 @@ export default function Doorman (userConfig) {
   const config = Object.assign({
     assetPath: './assets',
     logLevel: 'verbose',
-    port: 8080
+    port: 8080,
+    allowInsecure: false
   }, userConfig);
 
 
@@ -79,7 +80,7 @@ export default function Doorman (userConfig) {
     }
 
     const inboundCallerId = parseCallerId(req.query.From);
-    const isSecure = req.get('X-Forwarded-Proto') === 'https';
+    const isSecure = !config.allowInsecure || req.get('X-Forwarded-Proto') === 'https';
 
     log.verbose('validate twilio request', `Incoming call from "${inboundCallerId}".`);
 
