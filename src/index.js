@@ -3,10 +3,10 @@ import 'babel-polyfill';
 import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
-import log from 'npmlog';
 import {equals, is, merge, where} from 'ramda';
 
 import createCall from './lib/call';
+import log from './lib/log';
 import twimlResponse from './lib/twiml';
 
 import {
@@ -33,7 +33,7 @@ export default function Doorman (userConfig) {
    */
   const config = Object.assign({
     assetPath: './assets',
-    logLevel: 'info',
+    logLevel: 'verbose',
     port: 8080
   }, userConfig);
 
@@ -83,10 +83,10 @@ export default function Doorman (userConfig) {
 
     log.verbose('validate twilio request', `Incoming call from "${inboundCallerId}".`);
 
-    const isValid = R.where({
-      ApplicationSid: R.equals(config.twilioApplicationSid),
-      AccountSid: R.equals(config.twilioAccountSid)
-    }, R.merge(req.query, req.body));
+    const isValid = where({
+      ApplicationSid: equals(config.twilioApplicationSid),
+      AccountSid: equals(config.twilioAccountSid)
+    }, merge(req.query, req.body));
 
     if (isSecure && isValid) {
       log.verbose('validate twilio request', 'Twilio request is valid.');
@@ -127,7 +127,15 @@ export default function Doorman (userConfig) {
   }
 
 
-  async function getOrCreateCall (callSid, inboundCallerId) {
+  /**
+   * Returns the current call from the calls Map if it exists. Otherwise,
+   * creates a new call, adds it to the calls Map, and returns it.
+   *
+   * @param {string} callSid - Twilio Call SID.
+   * @param {string} inboundCallerId - Number of the calling party.
+   * @param {string} toNumber - Twilio number dialed by the calling party.
+   */
+  async function getOrCreateCall (callSid, inboundCallerId, toNumber) {
     if (calls.has(callSid)) {
       log.verbose('getOrCreateCall', `Call "${callSid}" exists, resuming call.`);
       return calls.get(callSid);
@@ -142,7 +150,7 @@ export default function Doorman (userConfig) {
       call: callStruct
     });
 
-    log.verbose('getOrCreateCall', `Call "${callSid}" created.`);
+    log.verbose('getOrCreateCall', `Call created for  "${callSid}".`);
 
     calls.set(callSid, call);
 
@@ -154,7 +162,7 @@ export default function Doorman (userConfig) {
    * Starts the server.
    */
   function startServer () {
-    server.listen(config.port, () => log.log('info', 'server', `Doorman running on port: ${config.port}`));
+    server.listen(config.port, () => log.info('startServer', `Doorman running on port: ${config.port}`));
   }
 
 
@@ -187,7 +195,7 @@ export default function Doorman (userConfig) {
 
       // If the call is now completed, remove it from the calls map.
       if (call.isCompleted()) {
-        log.verbose('request', 'Call is complete.');
+        log.verbose('request', `Call "${CallSid}" is complete.`);
         calls.delete(CallSid);
       }
 

@@ -1,11 +1,7 @@
 // ----- Call Parser -----------------------------------------------------------
 
-import R from 'ramda';
-
-import {
-  DEFAULT_ACTION
-} from '../etc/constants';
-
+import {is} from 'ramda';
+import {DEFAULT_ACTION} from '../etc/constants';
 import twimlResponse from './twiml';
 
 
@@ -90,7 +86,7 @@ export default function createCall ({call, callId, fromNumber, toNumber} = {}) {
   function getNextSegment () {
     // If the call is completed, it cannot be advanced.
     if (completed) {
-      throw new Error('Trying to advance a completed call.');
+      throw new Error('[getNextSegment] Trying to advance a completed call.');
     }
 
     let result;
@@ -153,7 +149,7 @@ export default function createCall ({call, callId, fromNumber, toNumber} = {}) {
    */
   function resume (resumeArgs) {
     if (!resumeCallback) {
-      throw new Error('Call paused, but no resume handler was set.');
+      throw new Error('[resume] Call paused, but no resume handler was set.');
     }
 
     // Set the call structure to the return value of the resume callback.
