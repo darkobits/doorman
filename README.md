@@ -58,6 +58,7 @@ Doorman has the following configurable options:
 |`twilioApplicationSid`|Twilio Application SID.|
 |`callDataFn`|This function will be invoked by Doorman and will be passed the current incoming caller ID and a callback. The callback has the signature `(err, data)` and should be invoked and passed the call flow data matching the provided caller ID.|
 |`logLevel`|How much logging information to display. Uses [npmlog](https://github.com/npm/npmlog/blob/541407008c509755255a4819606e7916d26a77f5/log.js#L296-L304). (Default: `info`)|
+|`allowInsecure`|Whether to allow connections over HTTP (default: `false`).|
 
 ### Examples
 
