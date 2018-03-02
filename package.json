@@ -1,6 +1,6 @@
 {
   "name": "@darkobits/doorman",
-  "version": "0.1.3",
+  "version": "0.2.0-beta.0",
   "description": "An attempt to make access control systems Suck Less.",
   "author": "darkobits",
   "license": "WTFPL",
@@ -26,7 +26,8 @@
     "precommit": "run-p lint",
     "prepublish": "run-p lint test build",
     "prebump": "npm run prepublish",
-    "bump": "standard-version"
+    "bump": "standard-version",
+    "bump:beta": "npm run bump -- --prerelease=beta"
   },
   "dependencies": {
     "@darkobits/log": "^1.0.0",
