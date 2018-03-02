@@ -4,7 +4,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 import log from 'npmlog';
-import R from 'ramda';
+import {equals, is, merge, where} from 'ramda';
 
 import createCall from './lib/call';
 import twimlResponse from './lib/twiml';
@@ -22,7 +22,6 @@ import {
  *   to process.env.PORT, and then 8080.
  * @param {string} config.assetPath - Folder to serve static assets from.
  * @param {string} config.primaryPhoneNumber - Primary number for forwarding calls.
- * @param {string} config.twilioPhoneNumber - Twilio number assigned to Doorman.
  * @param {string} config.twilioAccountSid - Twilio account SID.
  * @param {string} config.twilioApplicationSid - Twilio application SID.
  */
@@ -111,7 +110,7 @@ export default function Doorman (userConfig) {
   function getCallData (callerId) {
     return new Promise((resolve, reject) => {
       config.callDataFn(callerId, (err, data) => {
-        data = R.is(String, data) ? JSON.parse(data) : data;
+        data = is(String, data) ? JSON.parse(data) : data;
 
         if (err) {
           reject(new Error(err));
@@ -139,7 +138,7 @@ export default function Doorman (userConfig) {
     const call = createCall({
       callId: callSid,
       fromNumber: inboundCallerId,
-      twilioNumber: config.twilioPhoneNumber,
+      toNumber,
       call: callStruct
     });
 
@@ -176,16 +175,12 @@ export default function Doorman (userConfig) {
   server.get(TWILIO_ENDPOINT, validateTwilioRequest, async (req, res) => {
     res.set('Content-Type', 'application/xml');
 
-    const {
-      CallSid,
-      From
-    } = req.query;
-
+    const {CallSid, From, To} = req.query;
     const inboundCallerId = parseCallerId(From);
 
     try {
       // Get or create the instruction set for the call.
-      const call = await getOrCreateCall(CallSid, inboundCallerId);
+      const call = await getOrCreateCall(CallSid, inboundCallerId, To);
 
       // Get TwiML to send.
       const twiml = call.advance(req.query);
@@ -203,7 +198,7 @@ export default function Doorman (userConfig) {
       log.verbose('request', `Forwarding call to "${config.primaryPhoneNumber}".`);
       // Call data could not be found for the incoming caller, or an unknown
       // error occurred. Forward the call to the primary number.
-      const twiml = twimlResponse(inboundCallerId, config.twilioPhoneNumber);
+      const twiml = twimlResponse(inboundCallerId, To);
 
       twiml.forwardCall({
         value: config.primaryPhoneNumber

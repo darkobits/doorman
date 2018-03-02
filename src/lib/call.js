@@ -16,17 +16,14 @@ import twimlResponse from './twiml';
  * @param {object} params
  * @param {string} params.callId - Twilio Call SID.
  * @param {string} params.fromNumber - Inbound caller ID.
- * @param {string} params.twilioNumber - Twilio phone number.
  * @param {array}  params.call - Call sequence.
  *
  * @return {object}
  */
-export default function createCall (params = {}) {
-  const {
-    callId,
-    fromNumber,
-    twilioNumber
-  } = params;
+export default function createCall ({call, callId, fromNumber, toNumber} = {}) {
+  if (!call || !is(Array, call)) {
+    throw new Error('createCall requires params.call be of type "Array".');
+  }
 
   if (!callId) {
     throw new Error('createCall requires params.callId be set.');
@@ -36,21 +33,9 @@ export default function createCall (params = {}) {
     throw new Error('createCall requires params.fromNumber be set.');
   }
 
-  if (!twilioNumber) {
-    throw new Error('createCall requires params.twilioNumber be set.');
+  if (!toNumber) {
+    throw new Error('createCall requires params.toNumber be set.');
   }
-
-  if (!params.call || !R.is(Array, params.call)) {
-    throw new Error('createCall requires params.call be of type "Array".');
-  }
-
-
-  /**
-   * Reference to the current call structure. This can change due to branching.
-   *
-   * @type {array}
-   */
-  let call = params.call;
 
 
   /**
@@ -91,7 +76,7 @@ export default function createCall (params = {}) {
    *
    * @type {object}
    */
-  const twiml = twimlResponse(fromNumber, twilioNumber);
+  const twiml = twimlResponse(fromNumber, toNumber);
 
 
   /**

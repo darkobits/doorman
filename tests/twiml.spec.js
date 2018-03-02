@@ -11,14 +11,14 @@ import {
 
 
 const FROM_NUMBER = '415-555-1111';
-const TWILIO_PHONE_NUMBER = '415-555-3333';
+const TO_NUMBER = '415-555-4567';
 
 
 describe('TwiML Responses', () => {
   let twiml;
 
   beforeEach(() => {
-    twiml = new twimlResponse(FROM_NUMBER, TWILIO_PHONE_NUMBER);
+    twiml = new twimlResponse(FROM_NUMBER, TO_NUMBER);
   });
 
   describe('forwardCall', () => {
@@ -59,7 +59,7 @@ describe('TwiML Responses', () => {
       });
 
       assertXmlContains(`
-        <Sms from="${TWILIO_PHONE_NUMBER}"
+        <Sms from="${TO_NUMBER}"
           to="${toNumber}">
           ${message}
         </Sms>

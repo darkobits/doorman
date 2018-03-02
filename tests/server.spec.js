@@ -13,7 +13,7 @@ import {
 
 const FROM_NUMBER = '415-555-1111';
 const PRIMARY_PHONE_NUMBER = '415-555-2222';
-const TWILIO_PHONE_NUMBER = '415-555-3333';
+const TO_NUMBER = '415-555-4444';
 
 
 /**
@@ -29,7 +29,6 @@ function createApp (data) {
   const app = Doorman({
     logLevel: 'error',
     primaryPhoneNumber: PRIMARY_PHONE_NUMBER,
-    twilioPhoneNumber: TWILIO_PHONE_NUMBER,
     twilioAccountSid: TWILIO_ACCOUNT_SID,
     twilioApplicationSid: TWILIO_APPLICATION_SID,
     callDataFn (callerId, cb) {
@@ -56,7 +55,8 @@ function createApp (data) {
       AccountSid: TWILIO_ACCOUNT_SID,
       ApplicationSid: TWILIO_APPLICATION_SID,
       CallSid: '1',
-      From: FROM_NUMBER
+      From: FROM_NUMBER,
+      To: TO_NUMBER
     }, params));
 
 
@@ -66,7 +66,7 @@ function createApp (data) {
 }
 
 
-describe('GateBot', () => {
+describe('Doorman', () => {
   let app;
 
   describe('Hello World', () => {

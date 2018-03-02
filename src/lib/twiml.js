@@ -15,11 +15,12 @@ import {
  * See: https://www.twilio.com/docs/api/twiml
  *
  * @param {string} inboundCallerId - Inbound number for the current call.
- * @param {string} twilioNumber - Twilio phone number.
+ * @param {string} toNumber - Twilio number that was dialed, as reported in the
+ *   incoming Twilio request.
  *
  * @return {object}
  */
-export default function twimlResponse (inboundCallerId, twilioNumber) {
+export default function twimlResponse (inboundCallerId, toNumber) {
   /**
    * Reference to the current TwiML document.
    *
@@ -94,7 +95,7 @@ export default function twimlResponse (inboundCallerId, twilioNumber) {
     }
 
     twiml.sms({
-      from: twilioNumber,
+      from: toNumber,
       to
     }, value);
 
