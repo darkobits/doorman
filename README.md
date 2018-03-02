@@ -1,6 +1,14 @@
-![doorman](https://user-images.githubusercontent.com/441546/36626936-525ce744-18f0-11e8-9652-b9e2ea2cf319.png)
+<a href="#top" id="top">
+  <img src="https://user-images.githubusercontent.com/441546/36892807-cca8da20-1dba-11e8-8a8c-8928daf3f779.png">
+</a>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@darkobits/doorman"><img src="https://img.shields.io/npm/v/@darkobits/doorman.svg?style=flat-square"></a>
+  <a href="https://travis-ci.org/darkobits/doorman"><img src="https://img.shields.io/travis/darkobits/doorman.svg?style=flat-square"></a>
+  <a href="https://www.codacy.com/app/darkobits/doorman"><img src="https://img.shields.io/codacy/coverage/1fbd5676e2df4ec78555c507a4d3d5a3.svg?style=flat-square"></a>
+  <a href="https://github.com/conventional-changelog/standard-version"><img src="https://img.shields.io/badge/conventional%20commits-1.0.0-027dc6.svg?style=flat-square"></a>
+  <a href="https://github.com/sindresorhus/xo"><img src="https://img.shields.io/badge/code_style-XO-e271a5.svg?style=flat-square"></a>
+</p>
 
-[![][npm-img]][npm-url] [![][travis-img]][travis-url] [![][codacy-img]][codacy-url] [![][cc-img]][cc-url] [![][xo-img]][xo-url]
 
 Modern apartment communities equipped with access control systems typically work like this:
 
@@ -34,7 +42,7 @@ Doorman is configured using a key/value store where each key is a phone number a
 Doorman is available on NPM:
 
 ```bash
-> npm install --save @darkobits/doorman
+$ npm i @darkobits/doorman
 ```
 
 ### Configuration
@@ -46,7 +54,6 @@ Doorman has the following configurable options:
 |`assetPath`|Path to a folder containing any static assets (such as audio files) you wish to serve.|
 |`port`|Which port to listen on. This is typically configured automatically by providers like Heroku. Default: `8080`|
 |`primaryPhoneNumber`|If Doorman can't find a matching key in its data store for an incoming call, it will forward the call to this number.|
-|`twilioPhoneNumber`|Your Twilio phone number.|
 |`twilioAccountSid`|Twilio Account SID.|
 |`twilioApplicationSid`|Twilio Application SID.|
 |`callDataFn`|This function will be invoked by Doorman and will be passed the current incoming caller ID and a callback. The callback has the signature `(err, data)` and should be invoked and passed the call flow data matching the provided caller ID.|
@@ -66,8 +73,7 @@ const {
   PRIMARY_PHONE_NUMBER,
   REDIS_URL,
   TWILIO_ACCOUNT_SID,
-  TWILIO_APPLICATION_SID,
-  TWILIO_PHONE_NUMBER,
+  TWILIO_APPLICATION_SID
 } = process.env;
 
 
@@ -80,7 +86,6 @@ doorman({
   assetPath: resolve(__dirname, 'assets'),
   port: PORT,
   primaryPhoneNumber: PRIMARY_PHONE_NUMBER,
-  twilioPhoneNumber: TWILIO_PHONE_NUMBER,
   twilioAccountSid: TWILIO_ACCOUNT_SID,
   twilioApplicationSid: TWILIO_APPLICATION_SID,
   callDataFn: client.get.bind(client)
@@ -99,8 +104,7 @@ const {
   PRIMARY_PHONE_NUMBER,
   REDIS_URL,
   TWILIO_ACCOUNT_SID,
-  TWILIO_APPLICATION_SID,
-  TWILIO_PHONE_NUMBER,
+  TWILIO_APPLICATION_SID
 } = process.env;
 
 const data = {
@@ -112,7 +116,6 @@ doorman({
   assetPath: resolve(__dirname, 'assets'),
   port: PORT,
   primaryPhoneNumber: PRIMARY_PHONE_NUMBER,
-  twilioPhoneNumber: TWILIO_PHONE_NUMBER,
   twilioAccountSid: TWILIO_ACCOUNT_SID,
   twilioApplicationSid: TWILIO_APPLICATION_SID,
   callDataFn: (callerId, cb) => cb(undefined, data[callerId])
@@ -326,18 +329,3 @@ Next, let's prompt the guest for a simple passcode (`123`) and forward the call 
   <br>
   <img width="22" height="22" src="https://cloud.githubusercontent.com/assets/441546/25318539/db2f4cf2-2845-11e7-8e10-ef97d91cd538.png">
 </p>
-
-[travis-img]: https://img.shields.io/travis/darkobits/doorman.svg?style=flat-square
-[travis-url]: https://travis-ci.org/darkobits/doorman
-
-[codacy-img]: https://img.shields.io/codacy/coverage/1fbd5676e2df4ec78555c507a4d3d5a3.svg?style=flat-square
-[codacy-url]: https://www.codacy.com/app/darkobits/doorman
-
-[cc-img]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square
-[cc-url]: https://github.com/conventional-changelog/standard-version
-
-[xo-img]: https://img.shields.io/badge/code_style-XO-e271a5.svg?style=flat-square
-[xo-url]: https://github.com/sindresorhus/xo
-
-[npm-img]: https://img.shields.io/npm/v/@darkobits/doorman.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/@darkobits/doorman
