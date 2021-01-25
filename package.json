@@ -30,7 +30,7 @@
     "bump:beta": "npm run bump -- --prerelease=beta"
   },
   "dependencies": {
-    "@darkobits/log": "^1.0.0",
+    "@darkobits/log": "^1.2.5",
     "babel-polyfill": "6.x",
     "body-parser": "1.17.x",
     "express": "4.15.x",
