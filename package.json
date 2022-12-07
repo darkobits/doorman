@@ -33,7 +33,7 @@
     "@darkobits/log": "^1.0.0",
     "babel-polyfill": "6.x",
     "body-parser": "1.17.x",
-    "express": "4.15.x",
+    "express": "4.17.x",
     "ramda": "0.24.x",
     "twilio": "2.11.x"
   },
